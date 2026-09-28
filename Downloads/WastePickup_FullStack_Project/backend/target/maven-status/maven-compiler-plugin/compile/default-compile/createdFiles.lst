@@ -1,0 +1,11 @@
+com\wastepickup\entity\PickupLog.class
+com\wastepickup\WastePickupApplication.class
+com\wastepickup\entity\Zone.class
+com\wastepickup\repository\ScheduleRepository.class
+com\wastepickup\entity\Schedule.class
+com\wastepickup\controller\ZoneController.class
+com\wastepickup\entity\Household.class
+com\wastepickup\controller\PickupLogController.class
+com\wastepickup\repository\PickupLogRepository.class
+com\wastepickup\repository\HouseholdRepository.class
+com\wastepickup\repository\ZoneRepository.class
