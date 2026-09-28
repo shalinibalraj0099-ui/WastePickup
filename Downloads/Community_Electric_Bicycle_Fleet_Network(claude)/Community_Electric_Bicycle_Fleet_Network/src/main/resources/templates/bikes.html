@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title th:text="${title} + ' · eMobility'">eMobility</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <div th:replace="~{fragments :: sidebar(active='bikes')}"></div>
+  <div class="main">
+    <div th:replace="~{fragments :: topbar(title=${title})}"></div>
+    <main class="content">
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Bikes</h3>
+            <div class="text-mute" style="font-size:12px">Manage the e-bike fleet, battery levels and live status</div>
+          </div>
+          <button class="btn btn-primary" id="addBtn_bikes">+ Add Bike</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>ID</th><th>Bike Code / Model</th><th>Battery</th><th>Status</th><th>Latitude</th><th>Longitude</th><th>Actions</th></tr></thead>
+            <tbody id="tbody_bikes"><tr class="empty-row"><td colspan="7">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="/js/script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  initCrudPage({
+    key: 'bikes',
+    endpoint: '/api/bikes',
+    title: 'Bike',
+    tableBodyId: 'tbody_bikes',
+    addButtonId: 'addBtn_bikes',
+    columns: [
+        {key:'id', label:'ID'},
+        {key:'bikeCode', label:'Bike Code / Model'},
+        {key:'batteryPercent', label:'Battery', render:r=>r.batteryPercent+'%'},
+        {key:'status', label:'Status', render:r=>statusBadge(r.status)},
+        {key:'latitude', label:'Latitude'},
+        {key:'longitude', label:'Longitude'}
+    ],
+    fields: [
+        {key:'bikeCode', label:'Bike Code / Model', required:true},
+        {key:'batteryPercent', label:'Battery %', type:'number'},
+        {key:'status', label:'Status', type:'select', options:[{value:'AVAILABLE',label:'AVAILABLE'},{value:'ACTIVE',label:'ACTIVE'},{value:'IN_RIDE',label:'IN_RIDE'},{value:'LOW_BATTERY',label:'LOW_BATTERY'},{value:'CHARGING',label:'CHARGING'},{value:'MAINTENANCE',label:'MAINTENANCE'}]},
+        {key:'latitude', label:'Latitude', type:'number', step:'0.0001'},
+        {key:'longitude', label:'Longitude', type:'number', step:'0.0001'}
+    ]
+  });
+});
+</script>
+</body>
+</html>

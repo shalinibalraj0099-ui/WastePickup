@@ -1,0 +1,2436 @@
+{
+  "info": {
+    "name": "Bicycle_Fleet_API_Postman_Collection",
+    "description": "Full CRUD REST API collection for the Community Shared Electric Bicycle & Micromobility Fleet Network (Spring Boot + MySQL).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Sneha R\",\n  \"email\": \"sneha.new@ebike.com\",\n  \"password\": \"rider123\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@ebike.com\",\n  \"password\": \"admin123\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Bikes",
+      "item": [
+        {
+          "name": "Get all Bikes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/bikes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bikes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Bikes by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/bikes/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bikes",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Bike",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/bikes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bikes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bikeCode\": \"EB-006 (E-Bike X1)\",\n  \"batteryPercent\": 95,\n  \"status\": \"AVAILABLE\",\n  \"latitude\": 9.9252,\n  \"longitude\": 78.1198\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Bike",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/bikes/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bikes",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bikeCode\": \"EB-006 (E-Bike X1)\",\n  \"batteryPercent\": 40,\n  \"status\": \"ACTIVE\",\n  \"latitude\": 9.93,\n  \"longitude\": 78.12\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Bike",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/bikes/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bikes",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Stations",
+      "item": [
+        {
+          "name": "Get all Stations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/stations",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "stations"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Stations by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/stations/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "stations",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Station",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/stations",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "stations"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Station-5\",\n  \"location\": \"Bus Stand\",\n  \"totalSlots\": 16,\n  \"availableSlots\": 10,\n  \"chargingSlots\": 4\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Station",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/stations/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "stations",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Station-5\",\n  \"location\": \"Bus Stand\",\n  \"totalSlots\": 16,\n  \"availableSlots\": 6,\n  \"chargingSlots\": 4\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Station",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/stations/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "stations",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Rides",
+      "item": [
+        {
+          "name": "Get all rides",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/rides",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "rides"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get ride by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/rides/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "rides",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create ride record",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/rides",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "rides"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"riderId\": 1,\n  \"bikeId\": 1,\n  \"durationMinutes\": 0,\n  \"fare\": 0,\n  \"status\": \"ACTIVE\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Start ride",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/rides/start",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "rides",
+                "start"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"riderId\": 1,\n  \"bikeId\": 5\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "End ride",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/rides/end",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "rides",
+                "end"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rideId\": 1\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update ride",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/rides/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "rides",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"riderId\": 1,\n  \"bikeId\": 1,\n  \"durationMinutes\": 15,\n  \"fare\": 30,\n  \"status\": \"COMPLETED\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete ride",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/rides/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "rides",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Riders (Customers)",
+      "item": [
+        {
+          "name": "Get all Riders (Customers)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/riders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "riders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Riders (Customers) by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/riders/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "riders",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Riders (Customers)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/riders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "riders"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"New Rider\",\n  \"email\": \"new.rider@ebike.com\",\n  \"phone\": \"9999900000\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Riders (Customers)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/riders/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "riders",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"New Rider\",\n  \"email\": \"new.rider@ebike.com\",\n  \"phone\": \"9999911111\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Riders (Customers)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/riders/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "riders",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Vendors",
+      "item": [
+        {
+          "name": "Get all Vendors",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/vendors",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "vendors"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Vendors by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/vendors/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "vendors",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Vendor",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/vendors",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "vendors"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Speedy Bike Parts\",\n  \"email\": \"hi@speedyparts.com\",\n  \"phone\": \"9000000099\",\n  \"address\": \"Industrial Estate\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Vendor",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/vendors/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "vendors",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Speedy Bike Parts\",\n  \"email\": \"hi@speedyparts.com\",\n  \"phone\": \"9000000099\",\n  \"address\": \"New Industrial Estate\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Vendor",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/vendors/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "vendors",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Corporate Sponsors",
+      "item": [
+        {
+          "name": "Get all Corporate Sponsors",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/sponsors",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "sponsors"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Corporate Sponsors by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/sponsors/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "sponsors",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Corporate Sponsor",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/sponsors",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "sponsors"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"companyName\": \"Solar Mobility Inc\",\n  \"contactName\": \"Rahul Verma\",\n  \"email\": \"rahul@solarmobility.com\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Corporate Sponsor",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/sponsors/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "sponsors",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"companyName\": \"Solar Mobility Inc\",\n  \"contactName\": \"Rahul Verma\",\n  \"email\": \"rahul.v@solarmobility.com\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Corporate Sponsor",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/sponsors/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "sponsors",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Get all Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Products by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/products/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Helmet\",\n  \"type\": \"ACCESSORY\",\n  \"unitPrice\": 650,\n  \"unit\": \"unit\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/products/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Helmet\",\n  \"type\": \"ACCESSORY\",\n  \"unitPrice\": 700,\n  \"unit\": \"unit\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Product",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/products/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Purchase Orders",
+      "item": [
+        {
+          "name": "Get all Purchase Orders",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/purchase-orders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "purchase-orders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Purchase Orders by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/purchase-orders/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "purchase-orders",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Purchase Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/purchase-orders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "purchase-orders"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vendorId\": 1,\n  \"productName\": \"Li-ion Battery Pack\",\n  \"quantity\": 5,\n  \"totalAmount\": 22500,\n  \"status\": \"PENDING\",\n  \"orderDate\": \"2026-01-10\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Purchase Order",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/purchase-orders/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "purchase-orders",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vendorId\": 1,\n  \"productName\": \"Li-ion Battery Pack\",\n  \"quantity\": 5,\n  \"totalAmount\": 22500,\n  \"status\": \"APPROVED\",\n  \"orderDate\": \"2026-01-10\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Purchase Order",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/purchase-orders/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "purchase-orders",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Vendor Bills",
+      "item": [
+        {
+          "name": "Get all Vendor Bills",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/vendor-bills",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "vendor-bills"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Vendor Bills by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/vendor-bills/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "vendor-bills",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Vendor Bill",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/vendor-bills",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "vendor-bills"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"purchaseOrderId\": 1,\n  \"vendorId\": 1,\n  \"amount\": 22500,\n  \"status\": \"UNPAID\",\n  \"billDate\": \"2026-01-12\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Vendor Bill",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/vendor-bills/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "vendor-bills",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"purchaseOrderId\": 1,\n  \"vendorId\": 1,\n  \"amount\": 22500,\n  \"status\": \"PAID\",\n  \"billDate\": \"2026-01-12\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Vendor Bill",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/vendor-bills/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "vendor-bills",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Sales Orders",
+      "item": [
+        {
+          "name": "Get all Sales Orders",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/sales-orders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "sales-orders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Sales Orders by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/sales-orders/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "sales-orders",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Sales Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/sales-orders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "sales-orders"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sponsorId\": 1,\n  \"productName\": \"Fleet Sponsorship Package\",\n  \"quantity\": 1,\n  \"totalAmount\": 60000,\n  \"status\": \"CREATED\",\n  \"orderDate\": \"2026-01-10\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Sales Order",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/sales-orders/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "sales-orders",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sponsorId\": 1,\n  \"productName\": \"Fleet Sponsorship Package\",\n  \"quantity\": 1,\n  \"totalAmount\": 60000,\n  \"status\": \"CONFIRMED\",\n  \"orderDate\": \"2026-01-10\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Sales Order",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/sales-orders/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "sales-orders",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Invoices",
+      "item": [
+        {
+          "name": "Get all Invoices",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/invoices",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "invoices"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Invoices by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/invoices/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "invoices",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Invoice",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/invoices",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "invoices"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"salesOrderId\": 1,\n  \"sponsorId\": 1,\n  \"amount\": 60000,\n  \"status\": \"UNPAID\",\n  \"invoiceDate\": \"2026-01-11\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Invoice",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/invoices/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "invoices",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"salesOrderId\": 1,\n  \"sponsorId\": 1,\n  \"amount\": 60000,\n  \"status\": \"PAID\",\n  \"invoiceDate\": \"2026-01-11\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Invoice",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/invoices/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "invoices",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Payments",
+      "item": [
+        {
+          "name": "Get all Payments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/payments",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "payments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Payments by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/payments/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/payments",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "payments"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"paymentType\": \"INCOME\",\n  \"referenceType\": \"RIDE\",\n  \"referenceId\": 1,\n  \"amount\": 24,\n  \"method\": \"UPI\",\n  \"paymentDate\": \"2026-01-10\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Payment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/payments/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"paymentType\": \"INCOME\",\n  \"referenceType\": \"RIDE\",\n  \"referenceId\": 1,\n  \"amount\": 30,\n  \"method\": \"UPI\",\n  \"paymentDate\": \"2026-01-10\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Payment",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/payments/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Chart of Accounts",
+      "item": [
+        {
+          "name": "Get all Chart of Accounts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/accounts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "accounts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Chart of Accounts by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/accounts/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "accounts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Chart of Account",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/accounts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "accounts"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"6000\",\n  \"name\": \"Depreciation\",\n  \"category\": \"EXPENSE\",\n  \"balance\": 0\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Chart of Account",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/accounts/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "accounts",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"6000\",\n  \"name\": \"Depreciation\",\n  \"category\": \"EXPENSE\",\n  \"balance\": 5000\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Chart of Account",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/accounts/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "accounts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Journals",
+      "item": [
+        {
+          "name": "Get all Journals",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/journals",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "journals"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Journals by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/journals/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "journals",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Journal",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/journals",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "journals"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Purchase Journal\",\n  \"type\": \"PURCHASE\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Journal",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/journals/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "journals",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Purchase Journal\",\n  \"type\": \"PURCHASE\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Journal",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/journals/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "journals",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Journal Entries",
+      "item": [
+        {
+          "name": "Get all Journal Entries",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/journal-entries",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "journal-entries"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Journal Entries by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/journal-entries/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "journal-entries",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Journal Entrie",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/journal-entries",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "journal-entries"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"journalId\": 1,\n  \"description\": \"New spare parts purchase\",\n  \"debit\": 0,\n  \"credit\": 22500,\n  \"entryDate\": \"2026-01-12\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Journal Entrie",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/journal-entries/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "journal-entries",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"journalId\": 1,\n  \"description\": \"New spare parts purchase\",\n  \"debit\": 0,\n  \"credit\": 22500,\n  \"entryDate\": \"2026-01-12\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Journal Entrie",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/journal-entries/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "journal-entries",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Ledger",
+      "item": [
+        {
+          "name": "Get all Ledger",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ledger",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ledger"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Ledger by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ledger/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ledger",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Ledger",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/ledger",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ledger"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accountId\": 1,\n  \"description\": \"Vendor payout\",\n  \"debit\": 0,\n  \"credit\": 22500,\n  \"entryDate\": \"2026-01-12\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Ledger",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/ledger/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ledger",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accountId\": 1,\n  \"description\": \"Vendor payout\",\n  \"debit\": 0,\n  \"credit\": 22500,\n  \"entryDate\": \"2026-01-12\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Ledger",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ledger/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ledger",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Budgets",
+      "item": [
+        {
+          "name": "Get all Budgets",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/budgets",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "budgets"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Budgets by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/budgets/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "budgets",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Budget",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/budgets",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "budgets"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"analyticAccountId\": 1,\n  \"allocatedAmount\": 500000,\n  \"actualAmount\": 330000,\n  \"period\": \"Sep 2026\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Budget",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/budgets/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "budgets",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"analyticAccountId\": 1,\n  \"allocatedAmount\": 500000,\n  \"actualAmount\": 350000,\n  \"period\": \"Sep 2026\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Budget",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/budgets/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "budgets",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Analytic Accounts",
+      "item": [
+        {
+          "name": "Get all Analytic Accounts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/analytic-accounts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "analytic-accounts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Analytic Accounts by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/analytic-accounts/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "analytic-accounts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Analytic Account",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/analytic-accounts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "analytic-accounts"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Downtown Zone\",\n  \"description\": \"Downtown operating budget\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Analytic Account",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/analytic-accounts/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "analytic-accounts",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Downtown Zone\",\n  \"description\": \"Downtown operating budget - revised\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Analytic Account",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/analytic-accounts/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "analytic-accounts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Bike Locations (GPS log)",
+      "item": [
+        {
+          "name": "Get all Bike Locations (GPS log)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/bike-locations",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bike-locations"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Bike Locations (GPS log) by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/bike-locations/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bike-locations",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Bike Locations (GPS log)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/bike-locations",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bike-locations"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bikeId\": 1,\n  \"latitude\": 9.926,\n  \"longitude\": 78.1205\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Bike Locations (GPS log)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/bike-locations/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bike-locations",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bikeId\": 1,\n  \"latitude\": 9.9265,\n  \"longitude\": 78.121\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Bike Locations (GPS log)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/bike-locations/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bike-locations",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Reports",
+      "item": [
+        {
+          "name": "Dashboard summary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/reports/dashboard",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "reports",
+                "dashboard"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Profit & Loss",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/reports/profit-loss",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "reports",
+                "profit-loss"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Balance Sheet",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/reports/balance-sheet",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "reports",
+                "balance-sheet"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Budget summary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/reports/budget",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "reports",
+                "budget"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

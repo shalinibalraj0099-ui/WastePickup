@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title th:text="${title} + ' · eMobility'">eMobility</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <div th:replace="~{fragments :: sidebar(active='vendor-bills')}"></div>
+  <div class="main">
+    <div th:replace="~{fragments :: topbar(title=${title})}"></div>
+    <main class="content">
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Vendor Bills</h3>
+            <div class="text-mute" style="font-size:12px">Bills received from vendors against purchase orders</div>
+          </div>
+          <div class="flex gap-8">
+            <button class="btn btn-outline" id="downloadBills" type="button">Download Bills</button>
+            <button class="btn btn-primary" id="addBtn_vbills">+ New Bill</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Bill No.</th><th>PO No.</th><th>Vendor ID</th><th>Amount</th><th>Status</th><th>Bill Date</th><th>Actions</th></tr></thead>
+            <tbody id="tbody_vbills"><tr class="empty-row"><td colspan="7">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="/js/script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  initCrudPage({
+    key: 'vbills',
+    endpoint: '/api/vendor-bills',
+    title: 'Vendor Bill',
+    tableBodyId: 'tbody_vbills',
+    addButtonId: 'addBtn_vbills',
+    columns: [
+        {key:'id', label:'Bill No.'},
+        {key:'purchaseOrderId', label:'PO No.'},
+        {key:'vendorId', label:'Vendor ID'},
+        {key:'amount', label:'Amount', render:r=>money(r.amount)},
+        {key:'status', label:'Status', render:r=>statusBadge(r.status)},
+        {key:'billDate', label:'Bill Date'}
+    ],
+    fields: [
+        {key:'purchaseOrderId', label:'Purchase Order ID', type:'number'},
+        {key:'vendorId', label:'Vendor ID', type:'number', required:true},
+        {key:'amount', label:'Amount (₹)', type:'number', step:'0.01'},
+        {key:'status', label:'Status', type:'select', options:[{value:'UNPAID',label:'UNPAID'},{value:'PAID',label:'PAID'},{value:'OVERDUE',label:'OVERDUE'}]},
+        {key:'billDate', label:'Bill Date', type:'date'}
+    ]
+  });
+
+  document.getElementById('downloadBills').addEventListener('click', async () => {
+    try {
+      const rows = await API.get('/api/vendor-bills');
+      downloadCsv('vendor-bills.csv', rows, ['id', 'purchaseOrderId', 'vendorId', 'amount', 'status', 'billDate']);
+    } catch (err) { toast('Could not download bills', true); }
+  });
+});
+</script>
+</body>
+</html>

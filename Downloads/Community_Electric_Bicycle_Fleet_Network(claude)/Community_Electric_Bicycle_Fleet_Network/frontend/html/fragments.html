@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- ============================== SIDEBAR ============================== -->
+<div th:fragment="sidebar(active)">
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="logo">🚲</div>
+      <div class="name">eMobility<span>Fleet Network</span></div>
+    </div>
+    <div class="nav-scroll">
+      <div class="nav-group-label">Overview</div>
+      <a href="/dashboard" class="nav-item" th:classappend="${active=='dashboard'} ? 'active' : ''"><span class="ic">📊</span>Dashboard</a>
+
+      <div class="nav-group-label">Fleet</div>
+      <a href="/bikes" class="nav-item" th:classappend="${active=='bikes'} ? 'active' : ''"><span class="ic">🚴</span>Bikes</a>
+      <a href="/stations" class="nav-item" th:classappend="${active=='stations'} ? 'active' : ''"><span class="ic">🔌</span>Stations</a>
+      <a href="/rides" class="nav-item" th:classappend="${active=='rides'} ? 'active' : ''"><span class="ic">🗺️</span>Rides</a>
+
+      <div class="nav-group-label">People</div>
+      <a href="/contacts" class="nav-item" th:classappend="${active=='contacts'} ? 'active' : ''"><span class="ic">👥</span>Contacts</a>
+
+      <div class="nav-group-label">Sales &amp; Purchase</div>
+      <a href="/products" class="nav-item" th:classappend="${active=='products'} ? 'active' : ''"><span class="ic">📦</span>Products</a>
+      <a href="/purchase-orders" class="nav-item" th:classappend="${active=='purchase-orders'} ? 'active' : ''"><span class="ic">🧾</span>Purchase Orders</a>
+      <a href="/vendor-bills" class="nav-item" th:classappend="${active=='vendor-bills'} ? 'active' : ''"><span class="ic">📄</span>Vendor Bills</a>
+      <a href="/sales-orders" class="nav-item" th:classappend="${active=='sales-orders'} ? 'active' : ''"><span class="ic">🛒</span>Sales Orders</a>
+      <a href="/invoices" class="nav-item" th:classappend="${active=='invoices'} ? 'active' : ''"><span class="ic">🧮</span>Invoices</a>
+      <a href="/payments" class="nav-item" th:classappend="${active=='payments'} ? 'active' : ''"><span class="ic">💳</span>Payments</a>
+
+      <div class="nav-group-label">Accounting</div>
+      <a href="/chart-of-accounts" class="nav-item" th:classappend="${active=='accounting'} ? 'active' : ''"><span class="ic">📚</span>Chart of Accounts</a>
+      <a href="/journals" class="nav-item" th:classappend="${active=='accounting'} ? 'active' : ''"><span class="ic">📖</span>Journals</a>
+      <a href="/ledger" class="nav-item" th:classappend="${active=='accounting'} ? 'active' : ''"><span class="ic">📑</span>Ledger</a>
+
+      <div class="nav-group-label">Planning</div>
+      <a href="/budgets" class="nav-item" th:classappend="${active=='budgets'} ? 'active' : ''"><span class="ic">🎯</span>Budgets</a>
+      <a href="/budget-report" class="nav-item" th:classappend="${active=='budgets'} ? 'active' : ''"><span class="ic">📈</span>Budget Report</a>
+
+      <div class="nav-group-label">Reports</div>
+      <a href="/profit-loss" class="nav-item" th:classappend="${active=='reports'} ? 'active' : ''"><span class="ic">💹</span>Profit &amp; Loss</a>
+      <a href="/balance-sheet" class="nav-item" th:classappend="${active=='reports'} ? 'active' : ''"><span class="ic">⚖️</span>Balance Sheet</a>
+    </div>
+    <div class="sidebar-foot">Green Rides · Better Cities</div>
+  </aside>
+</div>
+
+<!-- ============================== TOPBAR ============================== -->
+<header class="topbar" th:fragment="topbar(title)">
+  <div class="left">
+    <button class="hamburger" onclick="toggleSidebar()">☰</button>
+    <div>
+      <div class="page-title" th:text="${title}">Page</div>
+      <div class="crumbs">eMobility / <span th:text="${title}">Page</span></div>
+    </div>
+  </div>
+  <div class="right">
+    <span class="pill-btn"><span class="ic">📍</span><span class="txt">GPS Tracking</span></span>
+    <span class="pill-btn"><span class="ic">🔌</span><span class="txt">Dock &amp; Charging</span></span>
+    <span class="pill-btn"><span class="ic">🧾</span><span class="txt">Billing</span></span>
+    <a href="/login" class="avatar" title="Account">A</a>
+  </div>
+</header>
+
+</body>
+</html>

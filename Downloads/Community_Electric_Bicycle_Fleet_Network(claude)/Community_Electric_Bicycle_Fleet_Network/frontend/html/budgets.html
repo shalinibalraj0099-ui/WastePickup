@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title th:text="${title} + ' · eMobility'">eMobility</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <div th:replace="~{fragments :: sidebar(active='budgets')}"></div>
+  <div class="main">
+    <div th:replace="~{fragments :: topbar(title=${title})}"></div>
+    <main class="content">
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Budgets</h3>
+            <div class="text-mute" style="font-size:12px">Allocated vs actual spend by analytic account / period</div>
+          </div>
+          <button class="btn btn-primary" id="addBtn_budgets">+ New Budget</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>ID</th><th>Analytic A/C ID</th><th>Allocated</th><th>Actual</th><th>Period</th><th>Actions</th></tr></thead>
+            <tbody id="tbody_budgets"><tr class="empty-row"><td colspan="6">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="/js/script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  initCrudPage({
+    key: 'budgets',
+    endpoint: '/api/budgets',
+    title: 'Budget',
+    tableBodyId: 'tbody_budgets',
+    addButtonId: 'addBtn_budgets',
+    columns: [
+        {key:'id', label:'ID'},
+        {key:'analyticAccountId', label:'Analytic A/C ID'},
+        {key:'allocatedAmount', label:'Allocated', render:r=>money(r.allocatedAmount)},
+        {key:'actualAmount', label:'Actual', render:r=>money(r.actualAmount)},
+        {key:'period', label:'Period'}
+    ],
+    fields: [
+        {key:'analyticAccountId', label:'Analytic Account ID', type:'number'},
+        {key:'allocatedAmount', label:'Allocated Amount (₹)', type:'number', required:true, step:'0.01'},
+        {key:'actualAmount', label:'Actual Amount (₹)', type:'number', step:'0.01'},
+        {key:'period', label:'Period (e.g. Aug 2025)', required:true}
+    ]
+  });
+});
+</script>
+</body>
+</html>

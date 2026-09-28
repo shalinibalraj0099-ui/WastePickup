@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title th:text="${title} + ' · eMobility'">eMobility</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <div th:replace="~{fragments :: sidebar(active='reports')}"></div>
+  <div class="main">
+    <div th:replace="~{fragments :: topbar(title=${title})}"></div>
+    <main class="content">
+
+      <div class="grid grid-3">
+        <div class="card stat-card">
+          <div class="ic-box ic-green">💵</div>
+          <div class="label mt-8">Total Revenue</div>
+          <div class="value" id="p_revenue">-</div>
+        </div>
+        <div class="card stat-card">
+          <div class="ic-box ic-red">📉</div>
+          <div class="label mt-8">Total Expenses</div>
+          <div class="value" id="p_expenses">-</div>
+        </div>
+        <div class="card stat-card">
+          <div class="ic-box ic-teal">📈</div>
+          <div class="label mt-8">Net Profit</div>
+          <div class="value" id="p_profit">-</div>
+        </div>
+      </div>
+
+      <div class="card mt-20">
+        <div class="card-head"><h3>Revenue vs Expenses</h3></div>
+        <div class="chart-box">
+          <div id="plChart" class="bar-chart" aria-label="Revenue versus expenses chart"></div>
+          <div id="plEmptyState" class="empty-state" style="display: none;">No financial data available yet. Add invoices or vendor bills to populate the chart.</div>
+          <div id="plErrorState" class="empty-state" style="display: none;">Unable to load financial data. Check that the application and database are running.</div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+<script src="/js/script.js"></script>
+<script>
+async function loadProfitLoss() {
+  try {
+    const d = await API.get('/api/reports/profit-loss');
+    document.getElementById('p_revenue').textContent = money(d.totalRevenue);
+    document.getElementById('p_expenses').textContent = money(d.totalExpenses);
+    document.getElementById('p_profit').textContent = money(d.netProfit);
+
+    const chart = document.getElementById('plChart');
+    const emptyState = document.getElementById('plEmptyState');
+    const errorState = document.getElementById('plErrorState');
+
+    if (!d.hasData) {
+      chart.style.display = 'none';
+      emptyState.style.display = 'block';
+      errorState.style.display = 'none';
+      return;
+    }
+
+    chart.style.display = 'grid';
+    emptyState.style.display = 'none';
+    errorState.style.display = 'none';
+
+    const values = [
+      {label: 'Revenue', value: Number(d.totalRevenue) || 0, color: 'bar-green'},
+      {label: 'Expenses', value: Number(d.totalExpenses) || 0, color: 'bar-red'},
+      {label: 'Net Profit', value: Number(d.netProfit) || 0, color: 'bar-teal'}
+    ];
+    const scale = Math.max(...values.map(item => Math.abs(item.value)), 1);
+    chart.innerHTML = values.map(item => {
+      const height = Math.max(Math.round(Math.abs(item.value) / scale * 100), 4);
+      const sign = item.value < 0 ? '-' : '';
+      return `<div class="bar-column">
+        <div class="bar-value">${sign}${money(Math.abs(item.value))}</div>
+        <div class="bar-track"><div class="bar-fill ${item.color}" style="height:${height}%"></div></div>
+        <div class="bar-label">${item.label}</div>
+      </div>`;
+    }).join('');
+  } catch (e) {
+    document.getElementById('plChart').style.display = 'none';
+    document.getElementById('plEmptyState').style.display = 'none';
+    document.getElementById('plErrorState').style.display = 'block';
+    toast('Could not load P&L report', true);
+  }
+}
+document.addEventListener('DOMContentLoaded', loadProfitLoss);
+</script>
+</body>
+</html>

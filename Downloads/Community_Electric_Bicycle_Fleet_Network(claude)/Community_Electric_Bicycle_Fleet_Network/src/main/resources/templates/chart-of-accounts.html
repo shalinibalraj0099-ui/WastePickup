@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title th:text="${title} + ' · eMobility'">eMobility</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <div th:replace="~{fragments :: sidebar(active='accounting')}"></div>
+  <div class="main">
+    <div th:replace="~{fragments :: topbar(title=${title})}"></div>
+    <main class="content">
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Chart of Accounts</h3>
+            <div class="text-mute" style="font-size:12px">Ledger accounts used across the accounting module</div>
+          </div>
+          <button class="btn btn-primary" id="addBtn_accounts">+ Add Account</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>ID</th><th>Code</th><th>Name</th><th>Category</th><th>Balance</th><th>Actions</th></tr></thead>
+            <tbody id="tbody_accounts"><tr class="empty-row"><td colspan="6">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="/js/script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  initCrudPage({
+    key: 'accounts',
+    endpoint: '/api/accounts',
+    title: 'Chart of Account',
+    tableBodyId: 'tbody_accounts',
+    addButtonId: 'addBtn_accounts',
+    columns: [
+        {key:'id', label:'ID'},
+        {key:'code', label:'Code'},
+        {key:'name', label:'Name'},
+        {key:'category', label:'Category', render:r=>statusBadge(r.category)},
+        {key:'balance', label:'Balance', render:r=>money(r.balance)}
+    ],
+    fields: [
+        {key:'code', label:'Account Code', required:true},
+        {key:'name', label:'Account Name', required:true},
+        {key:'category', label:'Category', type:'select', options:[{value:'ASSET',label:'ASSET'},{value:'LIABILITY',label:'LIABILITY'},{value:'EQUITY',label:'EQUITY'},{value:'REVENUE',label:'REVENUE'},{value:'EXPENSE',label:'EXPENSE'}]},
+        {key:'balance', label:'Balance (₹)', type:'number', step:'0.01'}
+    ]
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title th:text="${title} + ' · eMobility'">eMobility</title>
+<link rel="stylesheet" href="/css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="app-shell">
+  <div th:replace="~{fragments :: sidebar(active='reports')}"></div>
+  <div class="main">
+    <div th:replace="~{fragments :: topbar(title=${title})}"></div>
+    <main class="content">
+
+      <div class="grid grid-3">
+        <div class="card stat-card">
+          <div class="ic-box ic-green">💵</div>
+          <div class="label mt-8">Total Revenue</div>
+          <div class="value" id="p_revenue">-</div>
+        </div>
+        <div class="card stat-card">
+          <div class="ic-box ic-red">📉</div>
+          <div class="label mt-8">Total Expenses</div>
+          <div class="value" id="p_expenses">-</div>
+        </div>
+        <div class="card stat-card">
+          <div class="ic-box ic-teal">📈</div>
+          <div class="label mt-8">Net Profit</div>
+          <div class="value" id="p_profit">-</div>
+        </div>
+      </div>
+
+      <div class="card mt-20">
+        <div class="card-head"><h3>Revenue vs Expenses</h3></div>
+        <div class="chart-box"><canvas id="plChart"></canvas></div>
+      </div>
+
+    </main>
+  </div>
+</div>
+<script src="/js/script.js"></script>
+<script>
+async function loadProfitLoss() {
+  try {
+    const d = await API.get('/api/reports/profit-loss');
+    document.getElementById('p_revenue').textContent = money(d.totalRevenue);
+    document.getElementById('p_expenses').textContent = money(d.totalExpenses);
+    document.getElementById('p_profit').textContent = money(d.netProfit);
+
+    new Chart(document.getElementById('plChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Revenue', 'Expenses', 'Net Profit'],
+        datasets: [{ data: [d.totalRevenue, d.totalExpenses, d.netProfit], backgroundColor: ['#22c55e', '#ef4444', '#14e0b4'], borderRadius: 8 }]
+      },
+      options: { plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#9aa7bd' }, grid: { display: false } }, y: { ticks: { color: '#9aa7bd' }, grid: { color: '#182233' } } } }
+    });
+  } catch (e) { toast('Could not load P&L report', true); }
+}
+document.addEventListener('DOMContentLoaded', loadProfitLoss);
+</script>
+</body>
+</html>

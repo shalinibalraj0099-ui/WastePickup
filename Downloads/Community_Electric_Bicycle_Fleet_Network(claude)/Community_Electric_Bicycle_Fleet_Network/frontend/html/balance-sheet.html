@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title th:text="${title} + ' · eMobility'">eMobility</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <div th:replace="~{fragments :: sidebar(active='reports')}"></div>
+  <div class="main">
+    <div th:replace="~{fragments :: topbar(title=${title})}"></div>
+    <main class="content">
+
+      <div class="grid grid-3">
+        <div class="card stat-card"><div class="ic-box ic-blue">🏦</div><div class="label mt-8">Total Assets</div><div class="value" id="bs_assets">-</div></div>
+        <div class="card stat-card"><div class="ic-box ic-red">📑</div><div class="label mt-8">Total Liabilities</div><div class="value" id="bs_liabilities">-</div></div>
+        <div class="card stat-card"><div class="ic-box ic-green">🏛️</div><div class="label mt-8">Total Equity</div><div class="value" id="bs_equity">-</div></div>
+      </div>
+
+      <div class="card mt-20">
+        <div class="card-head">
+          <h3>Accounts</h3>
+          <a href="/chart-of-accounts" class="muted-link">Manage chart of accounts</a>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Code</th><th>Name</th><th>Category</th><th>Balance</th></tr></thead>
+            <tbody id="tbody_accounts"><tr class="empty-row"><td colspan="4">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+<script src="/js/script.js"></script>
+<script>
+async function loadBalanceSheet() {
+  try {
+    const d = await API.get('/api/reports/balance-sheet');
+    document.getElementById('bs_assets').textContent = money(d.totalAssets);
+    document.getElementById('bs_liabilities').textContent = money(d.totalLiabilities);
+    document.getElementById('bs_equity').textContent = money(d.totalEquity);
+    const body = document.getElementById('tbody_accounts');
+    body.innerHTML = d.accounts.length ? d.accounts.map(a => `
+      <tr><td>${a.code}</td><td>${a.name}</td><td>${statusBadge(a.category)}</td><td>${money(a.balance)}</td></tr>
+    `).join('') : '<tr class="empty-row"><td colspan="4">No accounts yet</td></tr>';
+  } catch (e) { toast('Could not load balance sheet', true); }
+}
+document.addEventListener('DOMContentLoaded', loadBalanceSheet);
+</script>
+</body>
+</html>

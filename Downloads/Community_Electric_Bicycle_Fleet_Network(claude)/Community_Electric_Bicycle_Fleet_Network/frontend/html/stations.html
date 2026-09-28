@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title th:text="${title} + ' · eMobility'">eMobility</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <div th:replace="~{fragments :: sidebar(active='stations')}"></div>
+  <div class="main">
+    <div th:replace="~{fragments :: topbar(title=${title})}"></div>
+    <main class="content">
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Stations</h3>
+            <div class="text-mute" style="font-size:12px">Docking & charging station network</div>
+          </div>
+          <button class="btn btn-primary" id="addBtn_stations">+ Add Station</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>ID</th><th>Name</th><th>Location</th><th>Total Slots</th><th>Available</th><th>Charging</th><th>Actions</th></tr></thead>
+            <tbody id="tbody_stations"><tr class="empty-row"><td colspan="7">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="/js/script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  initCrudPage({
+    key: 'stations',
+    endpoint: '/api/stations',
+    title: 'Stations',
+    tableBodyId: 'tbody_stations',
+    addButtonId: 'addBtn_stations',
+    columns: [
+        {key:'id', label:'ID'},
+        {key:'name', label:'Name'},
+        {key:'location', label:'Location'},
+        {key:'totalSlots', label:'Total Slots'},
+        {key:'availableSlots', label:'Available'},
+        {key:'chargingSlots', label:'Charging'}
+    ],
+    fields: [
+        {key:'name', label:'Station Name', required:true},
+        {key:'location', label:'Location', required:true},
+        {key:'totalSlots', label:'Total Slots', type:'number'},
+        {key:'availableSlots', label:'Available Slots', type:'number'},
+        {key:'chargingSlots', label:'Charging Slots', type:'number'}
+    ]
+  });
+});
+</script>
+</body>
+</html>

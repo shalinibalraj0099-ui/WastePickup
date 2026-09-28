@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title th:text="${title} + ' · eMobility'">eMobility</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <div th:replace="~{fragments :: sidebar(active='dashboard')}"></div>
+  <div class="main">
+    <div th:replace="~{fragments :: topbar(title=${title})}"></div>
+    <main class="content">
+
+      <div class="grid grid-4">
+        <div class="card stat-card">
+          <div class="top"><div class="ic-box ic-teal">🚴</div></div>
+          <div class="label">Total Bikes</div>
+          <div class="value" id="kpiBikes">-</div>
+        </div>
+        <div class="card stat-card">
+          <div class="top"><div class="ic-box ic-blue">🗺️</div></div>
+          <div class="label">Active Rides</div>
+          <div class="value" id="kpiRides">-</div>
+        </div>
+        <div class="card stat-card">
+          <div class="top"><div class="ic-box ic-purple">🔌</div></div>
+          <div class="label">Stations</div>
+          <div class="value" id="kpiStations">-</div>
+        </div>
+        <div class="card stat-card">
+          <div class="top"><div class="ic-box ic-green">💰</div></div>
+          <div class="label">Total Revenue</div>
+          <div class="value" id="kpiRevenue">-</div>
+        </div>
+      </div>
+
+      <div class="grid grid-2 mt-20">
+        <div class="card">
+          <div class="card-head"><h3>Ride Activity (last 7 days)</h3></div>
+          <div class="chart-box"><div id="rideChart" class="activity-chart" aria-label="Ride activity for the last seven days"></div></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Battery Status</h3></div>
+          <div class="chart-box battery-chart"><div id="batteryChart" class="battery-bars" aria-label="Battery status breakdown"></div></div>
+          <div class="flex justify-between mt-16" style="font-size:12.5px">
+            <div>🟢 Healthy (&ge;30%): <b id="battHealthy">-</b></div>
+            <div>🟠 Low (&lt;20%): <b id="battLow">-</b></div>
+            <div>🔵 Charging: <b id="battCharging">-</b></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-2 mt-20">
+        <div class="card">
+          <div class="card-head">
+            <h3>Recent Rides</h3>
+            <a href="/rides" class="muted-link">View all</a>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Rider</th><th>Bike</th><th>Duration</th><th>Fare</th><th>Status</th></tr></thead>
+              <tbody id="recentRides"><tr class="empty-row"><td colspan="5">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <h3>Live Bike Locations</h3>
+            <a href="/bikes" class="muted-link">Manage bikes</a>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Bike</th><th>Battery</th><th>Status</th><th>Lat</th><th>Lng</th></tr></thead>
+              <tbody id="bikeLocations"><tr class="empty-row"><td colspan="5">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+<script src="/js/script.js"></script>
+<script>
+async function loadDashboardExtras() {
+  try {
+    const rides = await API.get('/api/rides');
+    const bikes = await API.get('/api/bikes');
+
+    // Recent rides table
+    const recent = rides.slice(-5).reverse();
+    const rrBody = document.getElementById('recentRides');
+    rrBody.innerHTML = recent.length ? recent.map(r => `
+      <tr><td>#${r.riderId}</td><td>#${r.bikeId}</td><td>${r.durationMinutes||0} min</td><td>${money(r.fare)}</td><td>${statusBadge(r.status)}</td></tr>
+    `).join('') : '<tr class="empty-row"><td colspan="5">No rides yet</td></tr>';
+
+    // Bike locations table
+    const blBody = document.getElementById('bikeLocations');
+    blBody.innerHTML = bikes.length ? bikes.slice(0,6).map(b => `
+      <tr><td>${b.bikeCode}</td><td>${b.batteryPercent}%</td><td>${statusBadge(b.status)}</td><td>${b.latitude ?? '-'}</td><td>${b.longitude ?? '-'}</td></tr>
+    `).join('') : '<tr class="empty-row"><td colspan="5">No bikes yet</td></tr>';
+
+    // Ride activity line chart — group completed rides per day (last 7 days)
+    const days = [...Array(7)].map((_, i) => {
+      const d = new Date(); d.setDate(d.getDate() - (6 - i));
+      return d;
+    });
+    const labels = days.map(d => d.toLocaleDateString('en-IN', { weekday: 'short' }));
+    const counts = days.map(d => rides.filter(r => r.startTime && new Date(r.startTime).toDateString() === d.toDateString()).length);
+    const maxRides = Math.max(...counts, 1);
+    document.getElementById('rideChart').innerHTML = counts.map((count, index) => `
+      <div class="activity-column">
+        <div class="activity-count">${count}</div>
+        <div class="activity-track"><div class="activity-fill" style="height:${Math.max(count / maxRides * 100, 4)}%"></div></div>
+        <div class="activity-label">${labels[index]}</div>
+      </div>
+    `).join('');
+
+    // Battery donut
+    const healthy = bikes.filter(b => b.batteryPercent >= 30).length;
+    const mid = bikes.filter(b => b.batteryPercent >= 20 && b.batteryPercent < 30).length;
+    const low = bikes.filter(b => b.batteryPercent < 20).length;
+    const total = Math.max(healthy + mid + low, 1);
+    document.getElementById('batteryChart').innerHTML = `
+      <div class="battery-ring" style="--healthy:${healthy / total * 100}%;--mid:${(healthy + mid) / total * 100}%"><div>${healthy + mid + low}<small>Bikes</small></div></div>
+      <div class="battery-legend"><span><i class="legend-green"></i>Healthy ${healthy}</span><span><i class="legend-amber"></i>Medium ${mid}</span><span><i class="legend-red"></i>Low ${low}</span></div>`;
+  } catch (e) {
+    document.getElementById('rideChart').innerHTML = '<div class="chart-message">Unable to load ride activity.</div>';
+    document.getElementById('batteryChart').innerHTML = '<div class="chart-message">Unable to load battery status.</div>';
+    console.log('dashboard extras failed', e);
+  }
+}
+document.addEventListener('DOMContentLoaded', loadDashboardExtras);
+</script>
+</body>
+</html>

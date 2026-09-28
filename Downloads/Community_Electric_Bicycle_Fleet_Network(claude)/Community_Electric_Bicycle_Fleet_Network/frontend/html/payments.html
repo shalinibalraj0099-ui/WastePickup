@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title th:text="${title} + ' · eMobility'">eMobility</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <div th:replace="~{fragments :: sidebar(active='payments')}"></div>
+  <div class="main">
+    <div th:replace="~{fragments :: topbar(title=${title})}"></div>
+    <main class="content">
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>Payments</h3>
+            <div class="text-mute" style="font-size:12px">Rider fares, invoice receipts & vendor payouts</div>
+          </div>
+          <button class="btn btn-primary" id="addBtn_payments">+ New Payment</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>ID</th><th>Type</th><th>Reference</th><th>Ref. ID</th><th>Amount</th><th>Method</th><th>Date</th><th>Actions</th></tr></thead>
+            <tbody id="tbody_payments"><tr class="empty-row"><td colspan="8">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="/js/script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  initCrudPage({
+    key: 'payments',
+    endpoint: '/api/payments',
+    title: 'Payment',
+    tableBodyId: 'tbody_payments',
+    addButtonId: 'addBtn_payments',
+    columns: [
+        {key:'id', label:'ID'},
+        {key:'paymentType', label:'Type', render:r=>statusBadge(r.paymentType)},
+        {key:'referenceType', label:'Reference'},
+        {key:'referenceId', label:'Ref. ID'},
+        {key:'amount', label:'Amount', render:r=>money(r.amount)},
+        {key:'method', label:'Method'},
+        {key:'paymentDate', label:'Date'}
+    ],
+    fields: [
+        {key:'paymentType', label:'Type', type:'select', options:[{value:'INCOME',label:'INCOME'},{value:'EXPENSE',label:'EXPENSE'}]},
+        {key:'referenceType', label:'Reference Type (RIDE / INVOICE / VENDOR_BILL)'},
+        {key:'referenceId', label:'Reference ID', type:'number'},
+        {key:'amount', label:'Amount (₹)', type:'number', required:true, step:'0.01'},
+        {key:'method', label:'Method', type:'select', options:[{value:'UPI',label:'UPI'},{value:'CARD',label:'CARD'},{value:'CASH',label:'CASH'},{value:'BANK_TRANSFER',label:'BANK_TRANSFER'}]},
+        {key:'paymentDate', label:'Payment Date', type:'date'}
+    ]
+  });
+});
+</script>
+</body>
+</html>

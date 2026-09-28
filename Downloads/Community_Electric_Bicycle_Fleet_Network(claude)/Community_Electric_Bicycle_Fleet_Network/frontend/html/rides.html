@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title th:text="${title} + ' · eMobility'">eMobility</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <div th:replace="~{fragments :: sidebar(active='rides')}"></div>
+  <div class="main">
+    <div th:replace="~{fragments :: topbar(title=${title})}"></div>
+    <main class="content">
+
+      <div class="grid grid-2" style="margin-bottom:18px">
+        <div class="card">
+          <h3>🔓 Start a Ride</h3>
+          <div class="text-mute mt-8" style="font-size:12px;margin-bottom:14px">Unlocks a bike for a rider and marks it IN_RIDE</div>
+          <form id="startRideForm" class="form-grid">
+            <div class="form-row"><label>Rider ID</label><input type="number" id="startRiderId" required></div>
+            <div class="form-row"><label>Bike ID</label><input type="number" id="startBikeId" required></div>
+            <div style="grid-column:1/-1"><button class="btn btn-primary w-full" type="submit">Start Ride</button></div>
+          </form>
+        </div>
+        <div class="card">
+          <h3>✅ End a Ride</h3>
+          <div class="text-mute mt-8" style="font-size:12px;margin-bottom:14px">Ends the ride, calculates fare automatically and frees the bike</div>
+          <form id="endRideForm" class="form-grid">
+            <div class="form-row" style="grid-column:1/-1"><label>Ride ID</label><input type="number" id="endRideId" required></div>
+            <div style="grid-column:1/-1"><button class="btn btn-primary w-full" type="submit">End Ride</button></div>
+          </form>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div><h3>All Rides</h3><div class="text-mute" style="font-size:12px">Every ride session recorded on the platform</div></div>
+          <button class="btn btn-primary" id="addBtn_rides">+ Add Ride Record</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Ride ID</th><th>Rider ID</th><th>Bike ID</th><th>Start</th><th>End</th><th>Duration (min)</th><th>Fare</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="tbody_rides"><tr class="empty-row"><td colspan="9">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+<script src="/js/script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const crud = initCrudPage({
+    key: 'rides', endpoint: '/api/rides', title: 'Ride',
+    tableBodyId: 'tbody_rides', addButtonId: 'addBtn_rides',
+    columns: [
+      {key:'id', label:'ID'}, {key:'riderId', label:'Rider ID'}, {key:'bikeId', label:'Bike ID'},
+      {key:'startTime', label:'Start', render:r=>fmtDate(r.startTime)}, {key:'endTime', label:'End', render:r=>fmtDate(r.endTime)},
+      {key:'durationMinutes', label:'Duration'}, {key:'fare', label:'Fare', render:r=>money(r.fare)},
+      {key:'status', label:'Status', render:r=>statusBadge(r.status)}
+    ],
+    fields: [
+      {key:'riderId', label:'Rider ID', type:'number', required:true},
+      {key:'bikeId', label:'Bike ID', type:'number', required:true},
+      {key:'durationMinutes', label:'Duration (minutes)', type:'number'},
+      {key:'fare', label:'Fare (₹)', type:'number', step:'0.01'},
+      {key:'status', label:'Status', type:'select', options:[{value:'ACTIVE',label:'ACTIVE'},{value:'ONGOING',label:'ONGOING'},{value:'COMPLETED',label:'COMPLETED'},{value:'CANCELLED',label:'CANCELLED'}]}
+    ]
+  });
+
+  document.getElementById('startRideForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    try {
+      await API.post('/api/rides/start', {
+        riderId: Number(document.getElementById('startRiderId').value),
+        bikeId: Number(document.getElementById('startBikeId').value)
+      });
+      toast('Ride started — bike unlocked');
+      e.target.reset();
+      crud.reload();
+    } catch (err) { toast(err.message, true); }
+  });
+
+  document.getElementById('endRideForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    try {
+      const res = await API.post('/api/rides/end', { rideId: Number(document.getElementById('endRideId').value) });
+      toast('Ride completed — fare ' + money(res.fare));
+      e.target.reset();
+      crud.reload();
+    } catch (err) { toast(err.message, true); }
+  });
+});
+</script>
+</body>
+</html>

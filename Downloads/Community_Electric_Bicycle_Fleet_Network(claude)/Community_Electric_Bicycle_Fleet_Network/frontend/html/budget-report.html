@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title th:text="${title} + ' · eMobility'">eMobility</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <div th:replace="~{fragments :: sidebar(active='budgets')}"></div>
+  <div class="main">
+    <div th:replace="~{fragments :: topbar(title=${title})}"></div>
+    <main class="content">
+
+      <div class="card" style="margin-bottom:18px">
+        <h3>Micromobility Sector Budget</h3>
+        <div class="grid grid-3 mt-16">
+          <div><div class="text-mute" style="font-size:12px">Allocated Budget</div><div style="font-size:22px;font-weight:800" id="b_allocated">-</div></div>
+          <div><div class="text-mute" style="font-size:12px">Actual Spent</div><div style="font-size:22px;font-weight:800" id="b_actual">-</div></div>
+          <div><div class="text-mute" style="font-size:12px">Remaining</div><div style="font-size:22px;font-weight:800;color:var(--accent)" id="b_remaining">-</div></div>
+        </div>
+        <div class="mt-20">
+          <div class="progress-track"><div class="progress-fill" id="b_bar" style="width:0%"></div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h3>Budgets by Analytic Account</h3>
+          <a href="/budgets" class="muted-link">Manage budgets</a>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>ID</th><th>Analytic A/C ID</th><th>Allocated</th><th>Actual</th><th>Period</th><th>Utilisation</th></tr></thead>
+            <tbody id="tbody_budgets"><tr class="empty-row"><td colspan="6">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+<script src="/js/script.js"></script>
+<script>
+async function loadBudgetReport() {
+  try {
+    const summary = await API.get('/api/reports/budget');
+    document.getElementById('b_allocated').textContent = money(summary.allocated);
+    document.getElementById('b_actual').textContent = money(summary.actual);
+    document.getElementById('b_remaining').textContent = money(summary.remaining);
+    const pct = summary.allocated ? Math.min(100, (summary.actual / summary.allocated) * 100) : 0;
+    document.getElementById('b_bar').style.width = pct.toFixed(1) + '%';
+
+    const budgets = await API.get('/api/budgets');
+    const body = document.getElementById('tbody_budgets');
+    body.innerHTML = budgets.length ? budgets.map(b => {
+      const util = b.allocatedAmount ? Math.min(100, (b.actualAmount / b.allocatedAmount) * 100) : 0;
+      return `<tr>
+        <td>${b.id}</td><td>${b.analyticAccountId ?? '-'}</td><td>${money(b.allocatedAmount)}</td><td>${money(b.actualAmount)}</td><td>${b.period ?? '-'}</td>
+        <td><div class="progress-track" style="width:120px"><div class="progress-fill" style="width:${util.toFixed(1)}%"></div></div></td>
+      </tr>`;
+    }).join('') : '<tr class="empty-row"><td colspan="6">No budgets yet</td></tr>';
+  } catch (e) { toast('Could not load budget report', true); }
+}
+document.addEventListener('DOMContentLoaded', loadBudgetReport);
+</script>
+</body>
+</html>

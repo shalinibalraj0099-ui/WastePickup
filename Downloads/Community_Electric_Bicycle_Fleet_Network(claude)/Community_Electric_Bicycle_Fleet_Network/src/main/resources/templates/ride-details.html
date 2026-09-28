@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title th:text="${title} + ' · eMobility'">eMobility</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <div th:replace="~{fragments :: sidebar(active='rides')}"></div>
+  <div class="main">
+    <div th:replace="~{fragments :: topbar(title=${title})}"></div>
+    <main class="content">
+      <div class="card" style="max-width:520px">
+        <h3>🔍 Look up a Ride</h3>
+        <div class="text-mute mt-8" style="font-size:12px;margin-bottom:14px">Enter a Ride ID to see its full detail (GET /api/rides/&#123;id&#125;)</div>
+        <form id="lookupForm" class="flex gap-8">
+          <input type="number" id="rideIdInput" placeholder="Ride ID" required style="flex:1">
+          <button class="btn btn-primary" type="submit">Look up</button>
+        </form>
+      </div>
+
+      <div class="card mt-20 hidden" id="detailCard">
+        <div class="card-head"><h3>Ride #<span id="d_id"></span></h3><span id="d_status"></span></div>
+        <div class="grid grid-3">
+          <div><div class="text-mute" style="font-size:12px">Rider ID</div><div id="d_rider" style="font-weight:700;font-size:16px"></div></div>
+          <div><div class="text-mute" style="font-size:12px">Bike ID</div><div id="d_bike" style="font-weight:700;font-size:16px"></div></div>
+          <div><div class="text-mute" style="font-size:12px">Duration</div><div id="d_duration" style="font-weight:700;font-size:16px"></div></div>
+          <div><div class="text-mute" style="font-size:12px">Start Time</div><div id="d_start" style="font-weight:700;font-size:14px"></div></div>
+          <div><div class="text-mute" style="font-size:12px">End Time</div><div id="d_end" style="font-weight:700;font-size:14px"></div></div>
+          <div><div class="text-mute" style="font-size:12px">Fare</div><div id="d_fare" style="font-weight:700;font-size:16px;color:var(--accent)"></div></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="/js/script.js"></script>
+<script>
+document.getElementById('lookupForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const id = document.getElementById('rideIdInput').value;
+  try {
+    const r = await API.get('/api/rides/' + id);
+    document.getElementById('detailCard').classList.remove('hidden');
+    document.getElementById('d_id').textContent = r.id;
+    document.getElementById('d_status').innerHTML = statusBadge(r.status);
+    document.getElementById('d_rider').textContent = r.riderId;
+    document.getElementById('d_bike').textContent = r.bikeId;
+    document.getElementById('d_duration').textContent = (r.durationMinutes || 0) + ' min';
+    document.getElementById('d_start').textContent = fmtDate(r.startTime);
+    document.getElementById('d_end').textContent = fmtDate(r.endTime);
+    document.getElementById('d_fare').textContent = money(r.fare);
+  } catch (err) {
+    toast(err.message, true);
+    document.getElementById('detailCard').classList.add('hidden');
+  }
+});
+</script>
+</body>
+</html>
