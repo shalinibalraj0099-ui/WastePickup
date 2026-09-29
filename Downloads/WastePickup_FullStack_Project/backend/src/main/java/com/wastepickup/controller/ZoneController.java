@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wastepickup.Services.ZoneService;
 import com.wastepickup.entity.Zone;
-import com.wastepickup.repository.ZoneRepository;
 
 
 @RestController
@@ -23,11 +23,11 @@ import com.wastepickup.repository.ZoneRepository;
 public class ZoneController {
 
 
-    private final ZoneRepository repo;
+    private final ZoneService service;
 
 
-    public ZoneController(ZoneRepository repo) {
-        this.repo = repo;
+    public ZoneController(ZoneService service) {
+        this.service = service;
     }
 
 
@@ -37,7 +37,7 @@ public class ZoneController {
     public ResponseEntity<Zone> save(
             @RequestBody Zone zone) {
 
-        Zone saved = repo.save(zone);
+        Zone saved = service.createZone(zone);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -51,7 +51,7 @@ public class ZoneController {
     public ResponseEntity<List<Zone>> all() {
 
         return ResponseEntity
-                .ok(repo.findAll());
+                .ok(service.getAllZones());
     }
 
 
@@ -62,11 +62,7 @@ public class ZoneController {
             @PathVariable Long id) {
 
 
-        return repo.findById(id)
-                .<ResponseEntity<?>>map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity
-                        .status(HttpStatus.NOT_FOUND)
-                        .body("Zone not found"));
+        return ResponseEntity.ok(service.getZoneById(id));
     }
 
 
@@ -79,14 +75,7 @@ public class ZoneController {
             @RequestBody Zone zone) {
 
 
-        return repo.findById(id)
-                .<ResponseEntity<?>>map(existing -> {
-                    existing.setName(zone.getName());
-                    return ResponseEntity.ok(repo.save(existing));
-                })
-                .orElseGet(() -> ResponseEntity
-                        .status(HttpStatus.NOT_FOUND)
-                        .body("Zone not found"));
+        return ResponseEntity.ok(service.updateZone(id, zone));
     }
 
 
@@ -99,17 +88,7 @@ public class ZoneController {
             @PathVariable Long id) {
 
 
-        if(!repo.existsById(id)) {
-
-            return ResponseEntity
-                    .status(404)
-                    .body("Zone not found");
-        }
-
-
-        repo.deleteById(id);
-
-
+        service.deleteZone(id);
         return ResponseEntity
                 .ok("Zone deleted successfully");
     }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Waste Pickup | Households</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<script src="/js/app.js" defer></script>
+</head>
+<body data-page="households">
+<header class="topbar">
+	<a class="brand" href="/">Waste Pickup <span>FIELD OPERATIONS</span></a>
+	<nav aria-label="Main navigation">
+		<a href="/">Dashboard</a><a href="/zones">Zones</a><a class="active" href="/households">Households</a>
+		<a href="/schedules">Schedules</a><a href="/pickups">Pickup logs</a>
+	</nav>
+</header>
+<main class="page-wrap">
+	<div class="page-heading"><div><p class="eyebrow">SERVICE REGISTER</p><h1>Households</h1></div></div>
+	<div class="content-grid">
+		<section class="panel form-panel">
+			<p class="eyebrow">NEW RECORD</p><h2>Add a household</h2>
+			<form id="householdForm">
+				<label for="address">Pickup address</label>
+				<input id="address" name="address" placeholder="Street address" required maxlength="255">
+				<label for="phoneNumber">Mobile number (international format)</label>
+				<input id="phoneNumber" name="phoneNumber" type="tel" placeholder="+14155552671" pattern="\+[1-9][0-9]{7,14}" required>
+				<label for="householdZone">Service zone</label>
+				<select id="householdZone" name="zoneId" required><option value="">Choose a zone</option></select>
+				<label class="check-row" for="reminderFlag"><input id="reminderFlag" name="reminderFlag" type="checkbox"> Pickup reminder enabled</label>
+				<button class="button button-primary" type="submit">Save household</button>
+			</form>
+			<p class="form-message" id="formMessage" role="status"></p>
+		</section>
+		<section class="panel table-panel">
+			<div class="section-heading"><div><p class="eyebrow">REGISTER</p><h2>All households</h2></div><span class="count" id="householdTotal">0</span></div>
+			<div class="table-scroll"><table><thead><tr><th>ID</th><th>Address</th><th>Phone</th><th>Zone</th><th>Reminder</th><th></th></tr></thead><tbody id="householdTable"></tbody></table></div>
+		</section>
+	</div>
+</main>
+</body>
+</html>

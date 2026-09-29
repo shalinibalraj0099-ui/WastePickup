@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Waste Pickup | Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/app.js?v=6" defer></script>
+</head>
+<body data-page="dashboard">
+<header class="topbar">
+    <a class="brand" href="/">Waste Pickup <span>FIELD OPERATIONS</span></a>
+    <nav aria-label="Main navigation">
+        <a class="active" href="/">Dashboard</a>
+        <a href="/zones">Zones</a>
+        <a href="/households">Households</a>
+        <a href="/schedules">Schedules</a>
+        <a href="/pickups">Pickup logs</a>
+    </nav>
+</header>
+<main class="page-wrap">
+    <div class="page-heading">
+        <div><p class="eyebrow">OPERATIONS OVERVIEW</p><h1>Waste pickup tracker</h1></div>
+        <a class="button button-primary" href="/pickups">＋ Log a pickup</a>
+    </div>
+    <section class="metrics" aria-label="Current records">
+        <a class="metric" href="/zones"><span>Service zones</span><strong id="zoneCount">—</strong></a>
+        <a class="metric" href="/households"><span>Households</span><strong id="householdCount">—</strong></a>
+        <a class="metric" href="/schedules"><span>Pickup schedules</span><strong id="scheduleCount">—</strong></a>
+        <a class="metric" href="/pickups"><span>Pickup records</span><strong id="pickupCount">—</strong></a>
+    </section>
+    <p class="page-message" id="pageMessage" role="status"></p>
+    <section class="alerts-section" aria-labelledby="alertsTitle">
+        <div class="section-heading">
+            <div><p class="eyebrow">IN-APP REMINDERS</p><h2 id="alertsTitle">Flagged households</h2></div>
+            <a class="text-link" href="/households">Manage households →</a>
+        </div>
+        <div id="reminderAlerts" class="reminder-alerts" aria-live="polite">
+            <p class="empty-alert">Loading reminder alerts…</p>
+        </div>
+    </section>
+    <section class="section-heading"><div><p class="eyebrow">QUICK ACCESS</p><h2>Manage the service</h2></div></section>
+    <section class="quick-links">
+        <a href="/zones"><span class="quick-number">01</span><span><strong>Zones</strong><small>Set up collection areas</small></span><span class="arrow">→</span></a>
+        <a href="/households"><span class="quick-number">02</span><span><strong>Households</strong><small>Assign addresses to zones</small></span><span class="arrow">→</span></a>
+        <a href="/schedules"><span class="quick-number">03</span><span><strong>Schedules</strong><small>Plan pickup windows</small></span><span class="arrow">→</span></a>
+        <a href="/pickups"><span class="quick-number">04</span><span><strong>Pickup logs</strong><small>Record collection and sorting</small></span><span class="arrow">→</span></a>
+    </section>
+</main>
+</body>
+</html>

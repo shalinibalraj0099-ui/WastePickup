@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wastepickup.Services.PickupLogService;
 import com.wastepickup.entity.PickupLog;
-import com.wastepickup.repository.PickupLogRepository;
 
 @RestController
 @RequestMapping("/api/pickups")
 public class PickupLogController {
 
-    private final PickupLogRepository repo;
+    private final PickupLogService service;
 
 
-    public PickupLogController(PickupLogRepository repo) {
-        this.repo = repo;
+    public PickupLogController(PickupLogService service) {
+        this.service = service;
     }
 
 
@@ -32,16 +32,7 @@ public class PickupLogController {
     @PostMapping
     public ResponseEntity<?> save(@RequestBody PickupLog p) {
 
-        if (p.getScore() == null ||
-            p.getScore() < 0 ||
-            p.getScore() > 100) {
-
-            return ResponseEntity
-                    .badRequest()
-                    .body("Segregation score must be between 0 and 100");
-        }
-
-        PickupLog saved = repo.save(p);
+        PickupLog saved = service.createPickupLog(p);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -54,8 +45,7 @@ public class PickupLogController {
     @GetMapping
     public ResponseEntity<List<PickupLog>> all() {
 
-        return ResponseEntity
-                .ok(repo.findAll());
+        return ResponseEntity.ok(service.getAllPickupLogs());
     }
 
 
@@ -65,11 +55,7 @@ public class PickupLogController {
     public ResponseEntity<?> getById(
             @PathVariable Long id) {
 
-        return repo.findById(id)
-                .<ResponseEntity<?>>map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity
-                        .status(HttpStatus.NOT_FOUND)
-                        .body("Pickup log not found with id : " + id));
+        return ResponseEntity.ok(service.getPickupLogById(id));
     }
 
 
@@ -82,27 +68,7 @@ public class PickupLogController {
             @RequestBody PickupLog p) {
 
 
-        if(p.getScore() == null ||
-           p.getScore() < 0 ||
-           p.getScore() > 100) {
-
-
-            return ResponseEntity
-                    .badRequest()
-                    .body("Segregation score must be between 0 and 100");
-        }
-
-
-        return repo.findById(id)
-                .<ResponseEntity<?>>map(existing -> {
-                    existing.setScore(p.getScore());
-                    existing.setPickupTime(p.getPickupTime());
-                    existing.setHousehold(p.getHousehold());
-                    return ResponseEntity.ok(repo.save(existing));
-                })
-                .orElseGet(() -> ResponseEntity
-                        .status(HttpStatus.NOT_FOUND)
-                        .body("Pickup log not found with id : " + id));
+        return ResponseEntity.ok(service.updatePickupLog(id, p));
     }
 
 
@@ -114,17 +80,7 @@ public class PickupLogController {
             @PathVariable Long id) {
 
 
-        if(!repo.existsById(id)) {
-
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body("Pickup log not found with id : " + id);
-        }
-
-
-        repo.deleteById(id);
-
-
+        service.deletePickupLog(id);
         return ResponseEntity
                 .ok("Pickup log deleted successfully");
     }

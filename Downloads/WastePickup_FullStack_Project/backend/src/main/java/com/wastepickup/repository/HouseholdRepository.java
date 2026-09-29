@@ -7,5 +7,5 @@ import com.wastepickup.entity.Household;
 
 public interface HouseholdRepository extends JpaRepository<Household,Long>{
 	List<Household> findByZone_Id(Long zoneId);
-	List<Household> findByReminderFlagTrue();
+	List<Household> findByReminderFlagTrueAndReminderSentFalse();
 }

@@ -49,6 +49,10 @@ public class HouseholdServiceImpl implements HouseholdService {
     public Household updateHousehold(Long id, Household household) {
         Household existing = getHouseholdById(id);
         existing.setAddress(household.getAddress());
+        existing.setPhoneNumber(household.getPhoneNumber());
+        if (!household.isReminderFlag()) {
+            existing.setReminderSent(false);
+        }
         existing.setReminderFlag(household.isReminderFlag());
         existing.setZone(household.getZone());
         return householdRepository.save(existing);
@@ -67,6 +71,21 @@ public class HouseholdServiceImpl implements HouseholdService {
 
     @Override
     public List<Household> getFlaggedHouseholds() {
-        return householdRepository.findByReminderFlagTrue();
+        return householdRepository.findByReminderFlagTrueAndReminderSentFalse();
+    }
+
+    @Override
+    public Household markReminderSent(Long id) {
+        Household household = getHouseholdById(id);
+        if (!household.isReminderFlag()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Reminders are not enabled for this household");
+        }
+        if (household.getPhoneNumber() == null || household.getPhoneNumber().isBlank()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "A phone number is required to mark this reminder as sent");
+        }
+        household.setReminderSent(true);
+        return householdRepository.save(household);
     }
 }

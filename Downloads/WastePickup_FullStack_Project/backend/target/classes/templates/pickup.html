@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Waste Pickup | Pickup Logs</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<script src="/js/app.js" defer></script>
+</head>
+<body data-page="pickups">
+<header class="topbar">
+	<a class="brand" href="/">Waste Pickup <span>FIELD OPERATIONS</span></a>
+	<nav aria-label="Main navigation">
+		<a href="/">Dashboard</a><a href="/zones">Zones</a><a href="/households">Households</a>
+		<a href="/schedules">Schedules</a><a class="active" href="/pickups">Pickup logs</a>
+	</nav>
+</header>
+<main class="page-wrap">
+	<div class="page-heading"><div><p class="eyebrow">COLLECTION HISTORY</p><h1>Pickup logs</h1></div></div>
+	<div class="content-grid">
+		<section class="panel form-panel">
+			<p class="eyebrow">NEW RECORD</p><h2>Log a pickup</h2>
+			<form id="pickupForm">
+				<label for="pickupHousehold">Household</label>
+				<select id="pickupHousehold" name="householdId" required><option value="">Choose a household</option></select>
+				<label for="pickupTime">Pickup time</label>
+				<input id="pickupTime" name="pickupTime" type="datetime-local" required>
+				<label for="score">Segregation score</label>
+				<input id="score" name="score" type="number" min="0" max="100" required placeholder="0-100">
+				<button class="button button-primary" type="submit">Save pickup</button>
+			</form>
+			<p class="form-message" id="formMessage" role="status"></p>
+		</section>
+		<section class="panel table-panel">
+			<div class="section-heading"><div><p class="eyebrow">LATEST ACTIVITY</p><h2>Pickup records</h2></div><span class="count" id="pickupTotal">0</span></div>
+			<div class="table-scroll"><table><thead><tr><th>ID</th><th>Household</th><th>Picked up</th><th>Score</th><th></th></tr></thead><tbody id="pickupTable"></tbody></table></div>
+		</section>
+	</div>
+</main>
+</body>
+</html>

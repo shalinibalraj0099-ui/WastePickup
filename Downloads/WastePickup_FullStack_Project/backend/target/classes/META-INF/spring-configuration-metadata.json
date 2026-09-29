@@ -1,0 +1,30 @@
+{
+  "groups": [
+    {
+      "name": "notification.twilio",
+      "type": "com.wastepickup.config.TwilioProperties",
+      "sourceType": "com.wastepickup.config.TwilioProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "notification.twilio.account-sid",
+      "type": "java.lang.String",
+      "sourceType": "com.wastepickup.config.TwilioProperties",
+      "defaultValue": ""
+    },
+    {
+      "name": "notification.twilio.auth-token",
+      "type": "java.lang.String",
+      "sourceType": "com.wastepickup.config.TwilioProperties",
+      "defaultValue": ""
+    },
+    {
+      "name": "notification.twilio.from-number",
+      "type": "java.lang.String",
+      "sourceType": "com.wastepickup.config.TwilioProperties",
+      "defaultValue": ""
+    }
+  ],
+  "hints": []
+}

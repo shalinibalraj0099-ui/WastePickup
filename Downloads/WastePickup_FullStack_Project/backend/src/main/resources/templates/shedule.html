@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>Pickup Schedule</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+<h1>Pickup Schedule Management</h1>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Waste Pickup | Schedules</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<script src="/js/app.js" defer></script>
+</head>
+<body data-page="schedules">
+<header class="topbar">
+	<a class="brand" href="/">Waste Pickup <span>FIELD OPERATIONS</span></a>
+	<nav aria-label="Main navigation">
+		<a href="/">Dashboard</a><a href="/zones">Zones</a><a href="/households">Households</a>
+		<a class="active" href="/schedules">Schedules</a><a href="/pickups">Pickup logs</a>
+	</nav>
+</header>
+<main class="page-wrap">
+	<div class="page-heading"><div><p class="eyebrow">COLLECTION WINDOWS</p><h1>Schedules</h1></div></div>
+	<div class="content-grid">
+		<section class="panel form-panel">
+			<p class="eyebrow">NEW RECORD</p><h2>Create a schedule</h2>
+			<form id="scheduleForm">
+				<label for="scheduleZone">Service zone</label>
+				<select id="scheduleZone" name="zoneId" required><option value="">Choose a zone</option></select>
+				<label for="pickupDate">Pickup date</label>
+				<input id="pickupDate" name="pickupDate" type="date" required>
+				<div class="field-row">
+					<div><label for="startTime">Start time</label><input id="startTime" name="startTime" type="time" required></div>
+					<div><label for="endTime">End time</label><input id="endTime" name="endTime" type="time" required></div>
+				</div>
+				<button class="button button-primary" type="submit">Save schedule</button>
+			</form>
+			<p class="form-message" id="formMessage" role="status"></p>
+		</section>
+		<section class="panel table-panel">
+			<div class="section-heading"><div><p class="eyebrow">UPCOMING WINDOWS</p><h2>All schedules</h2></div><span class="count" id="scheduleTotal">0</span></div>
+			<div class="table-scroll"><table><thead><tr><th>ID</th><th>Zone</th><th>Date</th><th>Time window</th><th></th></tr></thead><tbody id="scheduleTable"></tbody></table></div>
+		</section>
+	</div>
+</main>
+</body>
+</html>

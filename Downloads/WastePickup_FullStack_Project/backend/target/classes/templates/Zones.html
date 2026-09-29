@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Waste Pickup | Zones</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<script src="/js/app.js" defer></script>
+</head>
+<body data-page="zones">
+<header class="topbar">
+	<a class="brand" href="/">Waste Pickup <span>FIELD OPERATIONS</span></a>
+	<nav aria-label="Main navigation">
+		<a href="/">Dashboard</a><a class="active" href="/zones">Zones</a>
+		<a href="/households">Households</a><a href="/schedules">Schedules</a><a href="/pickups">Pickup logs</a>
+	</nav>
+</header>
+<main class="page-wrap">
+	<div class="page-heading"><div><p class="eyebrow">SERVICE AREAS</p><h1>Zones</h1></div></div>
+	<div class="content-grid">
+		<section class="panel form-panel">
+			<p class="eyebrow">NEW RECORD</p><h2>Add a zone</h2>
+			<form id="zoneForm">
+				<label for="zoneName">Zone name</label>
+				<input id="zoneName" name="name" placeholder="e.g. North Sector" required maxlength="100">
+				<button class="button button-primary" type="submit">Add zone</button>
+			</form>
+			<p class="form-message" id="formMessage" role="status"></p>
+		</section>
+		<section class="panel table-panel">
+			<div class="section-heading"><div><p class="eyebrow">REGISTER</p><h2>All zones</h2></div><span class="count" id="zoneTotal">0</span></div>
+			<div class="table-scroll"><table><thead><tr><th>ID</th><th>Zone name</th><th></th></tr></thead><tbody id="zoneTable"></tbody></table></div>
+		</section>
+	</div>
+</main>
+</body>
+</html>

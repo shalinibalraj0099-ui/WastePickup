@@ -38,5 +38,7 @@ public interface HouseholdService {
 
     List<Household> getFlaggedHouseholds();
 
+    Household markReminderSent(Long id);
+
 
 }
